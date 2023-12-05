@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 
+
 namespace WPFAndMVVM2.Models
 {
     public class PersonRepository
     {
+
+       string fullpath = @"C:\\Users\\Altin\\Desktop\\WPF-GettingReal\\GettingREAL-WPF\\GettingReal_WPF\\WPFAndMVVM2\\Persons.csv";
+       // string fullpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Persons.csv");
+       // string fullpath = Path.GetFullPath("Persons.csv");
+
+
+
         // persons is the internal datastructure to represent the Person collection of the repository pattern
         private List<Person> persons = new List<Person>();
 
         public List<Person> GetPersons()
         {
             return persons;
-        }
+        } 
 
         public PersonRepository() 
         {
@@ -23,7 +31,7 @@ namespace WPFAndMVVM2.Models
         {
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("Persons.csv"))
+                using (StreamReader sr = new StreamReader(fullpath))
                 {
                     // Read the stream to a string, and instantiate a Person object
                     String line = sr.ReadLine();
@@ -53,7 +61,7 @@ namespace WPFAndMVVM2.Models
             {
                 
                 // Open the text file using a stream writer.
-                using (StreamWriter sw = new StreamWriter("Persons.csv"))
+                using (StreamWriter sw = new StreamWriter(fullpath))
                 {
                     // Loop through each Person in your collection and write to the file
                     foreach (var person in persons)

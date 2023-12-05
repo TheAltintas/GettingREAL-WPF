@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Persons.csv">
+    <None Remove="Persons.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Persons.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>
