@@ -82,5 +82,10 @@ namespace WPFAndMVVM2
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void DeletePerson(PersonRepository personRepository)
+        {
+            personRepository.Remove(person.Id);
+        }
     }
 }

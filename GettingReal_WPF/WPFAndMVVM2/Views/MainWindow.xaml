@@ -28,8 +28,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <Button x:Name="btnNewPerson" Content="New" Width="126"/>
-                <Button x:Name="btnDeletePerson" Content="Delete" Width="142"/>
+                <Button x:Name="btnNewPerson" Content="New" Width="126" Click="btnNewPerson_Click"/>
+                <Button x:Name="btnDeletePerson" Content="Delete" Width="142" Click="btnDeletePerson_Click"/>
             </StackPanel>
         </Grid>
 
@@ -39,10 +39,10 @@
             <TextBox x:Name="tbln" IsReadOnly="True" Text="{Binding SelectedPerson.LastName, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="170,109,171,0" VerticalAlignment="Top" />
             <TextBox x:Name="tbage" Text="{Binding SelectedPerson.Age, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="170,158,171,0" VerticalAlignment="Top"/>
             <TextBox x:Name="tbphone" IsReadOnly="True" Text="{Binding SelectedPerson.Phone, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="170,204,171,0" VerticalAlignment="Top"/>
-            <Label Content="Vare Nummer:" HorizontalAlignment="Left" Margin="67,59,0,0" VerticalAlignment="Top"/>
-            <Label Content="Vare:" HorizontalAlignment="Left" Margin="67,103,0,0" VerticalAlignment="Top" Width="66"/>
-            <Label Content="Antal:" HorizontalAlignment="Left" Margin="67,152,0,0" VerticalAlignment="Top"/>
-            <Label Content="Lager:" HorizontalAlignment="Left" Margin="67,204,0,0" VerticalAlignment="Top"/>
+            <Label Content="Item number:" HorizontalAlignment="Left" Margin="67,59,0,0" VerticalAlignment="Top"/>
+            <Label Content="Item:" HorizontalAlignment="Left" Margin="67,103,0,0" VerticalAlignment="Top" Width="66"/>
+            <Label Content="Number of item:" HorizontalAlignment="Left" Margin="67,152,0,0" VerticalAlignment="Top"/>
+            <Label Content="Storage:" HorizontalAlignment="Left" Margin="67,204,0,0" VerticalAlignment="Top"/>
             <Button x:Name="saveb" Content="Save Changes" Command="{Binding SaveChangesCommand}" HorizontalAlignment="Center" Margin="0,268,0,0" VerticalAlignment="Top" Height="27" Width="204" Click="saveb_Click"/>
             <Button x:Name="editbt" Content="Edit" HorizontalAlignment="Center" Margin="0,317,0,0" VerticalAlignment="Top" Height="27" Width="204" Click="editbt_Click"/>
         </Grid>

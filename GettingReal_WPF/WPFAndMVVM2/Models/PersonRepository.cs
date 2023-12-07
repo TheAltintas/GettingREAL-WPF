@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 
@@ -8,9 +9,10 @@ namespace WPFAndMVVM2.Models
     public class PersonRepository
     {
 
-       string fullpath = @"C:\\Users\\Altin\\Desktop\\WPF-GettingReal\\GettingREAL-WPF\\GettingReal_WPF\\WPFAndMVVM2\\Persons.csv";
-       // string fullpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Persons.csv");
-       // string fullpath = Path.GetFullPath("Persons.csv");
+        //string fullpath = @"C:\Users\simon\Desktop\WPF-GettingReal\GettingREAL-WPF\GettingReal_WPF\WPFAndMVVM2\Persons.csv";
+        //string fullpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @"\WPF-GettingReal\GettingREAL-WPF\GettingReal_WPF\WPFAndMVVM2\Persons.csv");
+        // string fullpath = Path.GetFullPath("Persons.csv");
+        string fullpath = "Persons.csv";
 
 
 
@@ -81,7 +83,7 @@ namespace WPFAndMVVM2.Models
             }
         }
 
-        public void UpdatePersonsFromViewModels(List<PersonViewModel> personsVM)
+        public void UpdatePersonsFromViewModels(ObservableCollection<PersonViewModel> personsVM)
         {
             // Iterer gennem PersonsVM og opdater persons-listen
             for (int i = 0; i < persons.Count && i < personsVM.Count; i++)
@@ -180,6 +182,8 @@ namespace WPFAndMVVM2.Models
             else
                 throw (new ArgumentException("Person with id = " + id + " not found"));
         }
+
+
 
     }
 }

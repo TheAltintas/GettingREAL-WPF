@@ -7,16 +7,17 @@ using System.Windows;
 using System.Windows.Input;
 using WPFAndMVVM2.Models;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace WPFAndMVVM2.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
         private PersonRepository personRepo = new PersonRepository();
-        private List<PersonViewModel> personsVM;
+        private ObservableCollection<PersonViewModel> personsVM;
         private PersonViewModel selectedPerson;
 
-        public List<PersonViewModel> PersonsVM
+        public ObservableCollection<PersonViewModel> PersonsVM
         {
             get { return personsVM; }
             set
@@ -31,7 +32,7 @@ namespace WPFAndMVVM2.ViewModels
 
         public MainViewModel()
         {
-            PersonsVM = new List<PersonViewModel>(); // Tilføj denne linje for at initialisere PersonsVM
+            PersonsVM = new ObservableCollection<PersonViewModel>(); // Tilføj denne linje for at initialisere PersonsVM
 
             UpdatePersonsVM();
             SaveChangesCommand = new RelayCommand(SaveChangesToFile, () => true);
@@ -97,6 +98,20 @@ namespace WPFAndMVVM2.ViewModels
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void AddDefaultPerson()
+        {
+            Person person = personRepo.Add("Specify item number", "Specify item", 0, "Specify storage");
+            PersonViewModel personViewModel = new PersonViewModel(person);
+            PersonsVM.Add(personViewModel);
+            SelectedPerson = personViewModel;
+        }
+
+        public void DeleteSelectedPerson()
+        {
+            selectedPerson.DeletePerson(personRepo);
+            PersonsVM.Remove(SelectedPerson);
         }
     }
 }

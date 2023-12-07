@@ -47,5 +47,19 @@ namespace WPFAndMVVM2
             tbln.IsReadOnly = false;
             tbphone.IsReadOnly = false;
         }
+
+        private void btnNewPerson_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.AddDefaultPerson();
+            listb.ScrollIntoView(mainViewModel.SelectedPerson);
+            tbfn.IsReadOnly = false;
+            tbphone.IsReadOnly = false;
+            tbln.IsReadOnly=false;
+        }
+
+        private void btnDeletePerson_Click(object sender, RoutedEventArgs e)
+        {
+            mainViewModel.DeleteSelectedPerson();
+        }
     }
 }
