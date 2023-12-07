@@ -17,6 +17,7 @@ namespace WPFAndMVVM2.ViewModels
         private ObservableCollection<PersonViewModel> personsVM;
         private PersonViewModel selectedPerson;
 
+        // Property to hold a collection of PersonViewModels
         public ObservableCollection<PersonViewModel> PersonsVM
         {
             get { return personsVM; }
@@ -30,44 +31,42 @@ namespace WPFAndMVVM2.ViewModels
             }
         }
 
+        // Constructor for MainViewModel
         public MainViewModel()
         {
-            PersonsVM = new ObservableCollection<PersonViewModel>(); // Tilføj denne linje for at initialisere PersonsVM
+            PersonsVM = new ObservableCollection<PersonViewModel>(); // Initialize PersonsVM collection
 
-            UpdatePersonsVM();
-            SaveChangesCommand = new RelayCommand(SaveChangesToFile, () => true);
+            UpdatePersonsVM(); // Populate PersonsVM initially
+            SaveChangesCommand = new RelayCommand(SaveChangesToFile, () => true); // Command for saving changes
         }
 
+        // Command to save changes
         public ICommand SaveChangesCommand { get; private set; }
 
+        // Method to save changes to file
         public void SaveChangesToFile()
         {
             try
             {
-                // Opdater persons-listen i PersonRepository med oplysningerne fra PersonsVM
-                personRepo.UpdatePersonsFromViewModels(PersonsVM);
+                personRepo.UpdatePersonsFromViewModels(PersonsVM); // Update Person objects from ViewModels
 
-                // Gem ændringer til Persons.csv
-                personRepo.SaveToFile();
+                personRepo.SaveToFile(); // Save changes to file
 
-                // Opdater PersonsVM efter at have gemt ændringerne
-                UpdatePersonsVM();
+                UpdatePersonsVM(); // Update the ViewModel collection
 
-                // Nulstil SelectedPerson
-                SelectedPerson = null;
+                SelectedPerson = null; // Clear selected person after saving changes
             }
             catch (IOException ex)
             {
-                // Håndter IO-fejl, hvis nødvendigt
                 MessageBox.Show($"An IO error occurred while saving changes: {ex.Message}");
             }
             catch (Exception ex)
             {
-                // Udskriv eventuelle andre undtagelser
                 MessageBox.Show($"An error occurred while saving changes: {ex.Message}");
             }
         }
 
+        // Property for the selected person in the UI
         public PersonViewModel SelectedPerson
         {
             get { return selectedPerson; }
@@ -79,12 +78,12 @@ namespace WPFAndMVVM2.ViewModels
                     OnPropertyChanged(nameof(SelectedPerson));
                 }
             }
-
         }
 
-       private void UpdatePersonsVM()
+        // Method to update PersonsVM collection from PersonRepository
+        private void UpdatePersonsVM()
         {
-            PersonsVM.Clear(); // Ryd eksisterende elementer
+            PersonsVM.Clear(); // Clear existing elements
             foreach (Person person in personRepo.GetPersons())
             {
                 PersonViewModel personViewModel = new PersonViewModel(person);
@@ -93,13 +92,16 @@ namespace WPFAndMVVM2.ViewModels
             OnPropertyChanged(nameof(PersonsVM));
         }
 
+        // INotifyPropertyChanged event
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // Method to raise PropertyChanged event
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        // Method to add a default person to the collection
         public void AddDefaultPerson()
         {
             Person person = personRepo.Add("Specify item number", "Specify item", 0, "Specify storage");
@@ -108,10 +110,11 @@ namespace WPFAndMVVM2.ViewModels
             SelectedPerson = personViewModel;
         }
 
+        // Method to delete the selected person from the collection
         public void DeleteSelectedPerson()
         {
-            selectedPerson.DeletePerson(personRepo);
-            PersonsVM.Remove(SelectedPerson);
+            selectedPerson.DeletePerson(personRepo); // Delete person from repository
+            PersonsVM.Remove(SelectedPerson); // Remove person from ViewModel collection
         }
     }
 }

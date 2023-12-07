@@ -3,89 +3,81 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-
 namespace WPFAndMVVM2.Models
 {
     public class PersonRepository
     {
-
-        //string fullpath = @"C:\Users\simon\Desktop\WPF-GettingReal\GettingREAL-WPF\GettingReal_WPF\WPFAndMVVM2\Persons.csv";
-        //string fullpath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @"\WPF-GettingReal\GettingREAL-WPF\GettingReal_WPF\WPFAndMVVM2\Persons.csv");
-        // string fullpath = Path.GetFullPath("Persons.csv");
+        // File path for storing person data
         string fullpath = "Persons.csv";
 
-
-
-        // persons is the internal datastructure to represent the Person collection of the repository pattern
+        // Collection to hold Person objects
         private List<Person> persons = new List<Person>();
 
+        // Method to retrieve all persons
         public List<Person> GetPersons()
         {
             return persons;
-        } 
+        }
 
-        public PersonRepository() 
+        // Constructor to initialize the repository by reading from the file
+        public PersonRepository()
         {
             InitializeRepository();
         }
 
+        // Method to read data from the file and populate the repository
         private void InitializeRepository()
         {
             try
-            {   // Open the text file using a stream reader.
+            {
+                // Open and read the file line by line
                 using (StreamReader sr = new StreamReader(fullpath))
                 {
-                    // Read the stream to a string, and instantiate a Person object
                     String line = sr.ReadLine();
-                    
+
+                    // Splitting each line by commas and adding data to the repository
                     while (line != null)
                     {
                         string[] parts = line.Split(',');
 
-                        // parts[0] contains first name, parts[1] contains last name, parts[2] contains age as text, parts[3] contains phone
-
                         this.Add(parts[0], parts[1], int.Parse(parts[2]), parts[3]);
 
-                        //Read the next line
                         line = sr.ReadLine();
                     }
                 }
             }
             catch (IOException)
             {
-                throw;
+                throw; // Throw the exception up if encountered while reading
             }
         }
 
+        // Method to save repository data back to the file
         public void SaveToFile()
         {
             try
             {
-                
-                // Open the text file using a stream writer.
+                // Open the file for writing
                 using (StreamWriter sw = new StreamWriter(fullpath))
                 {
-                    // Loop through each Person in your collection and write to the file
+                    // Write each person's data as a line in the file
                     foreach (var person in persons)
                     {
-                        // Format the Person data as a CSV line
                         string csvLine = $"{person.FirstName},{person.LastName},{person.Age},{person.Phone}";
-
-                        // Write the CSV line to the file
                         sw.WriteLine(csvLine);
                     }
                 }
             }
             catch (IOException)
             {
-                // Handle IO exception
-                throw;
+                throw; // Throw the exception up if encountered while writing
             }
         }
 
+        // Method to update persons' data from ViewModel objects
         public void UpdatePersonsFromViewModels(ObservableCollection<PersonViewModel> personsVM)
         {
-            // Iterer gennem PersonsVM og opdater persons-listen
+            // Update each person's data from corresponding ViewModel
             for (int i = 0; i < persons.Count && i < personsVM.Count; i++)
             {
                 persons[i].FirstName = personsVM[i].FirstName;
@@ -95,11 +87,11 @@ namespace WPFAndMVVM2.Models
             }
         }
 
-
+        // Method to add a new person
         public Person Add(string firstName, string lastName, int age, string phone)
         {
+            // Check validity of input arguments and create a new person
             Person result = null;
-
             if (!string.IsNullOrEmpty(firstName) &&
                 !string.IsNullOrEmpty(lastName) &&
                 age >= 0 &&
@@ -112,20 +104,19 @@ namespace WPFAndMVVM2.Models
                     Age = age,
                     Phone = phone
                 };
-
-                // Add to persons list
-                persons.Add(result);
+                persons.Add(result); // Add the person to the repository
             }
             else
-                throw (new ArgumentException("Not all arguments are valid"));
+                throw (new ArgumentException("Not all arguments are valid")); // Throw exception for invalid arguments
 
             return result;
         }
 
+        // Method to get a person by their ID
         public Person Get(int id)
         {
+            // Search for a person with the given ID
             Person result = null;
-
             foreach (Person p in persons)
             {
                 if (p.Id == id)
@@ -134,18 +125,19 @@ namespace WPFAndMVVM2.Models
                     break;
                 }
             }
-
             return result;
         }
 
+        // Method to get all persons in the repository
         public List<Person> GetAll()
         {
             return persons;
         }
 
+        // Method to update a person's data by their ID
         public void Update(int id, string firstName, string lastName, int age, string phone)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
+            // Find the person by ID and update their data if arguments are valid
             Person foundPerson = this.Get(id);
 
             if (foundPerson != null)
@@ -155,7 +147,7 @@ namespace WPFAndMVVM2.Models
                     age >= 0 &&
                     !string.IsNullOrEmpty(phone))
                 {
-                    // Update only changed properties for this person
+                    // Update the person's data if any change is detected
                     if (foundPerson.FirstName != firstName)
                         foundPerson.FirstName = firstName;
                     if (foundPerson.LastName != lastName)
@@ -166,24 +158,22 @@ namespace WPFAndMVVM2.Models
                         foundPerson.Phone = phone;
                 }
                 else
-                    throw (new ArgumentException("Not all arguments for person are valid"));
+                    throw (new ArgumentException("Not all arguments for person are valid")); // Throw exception for invalid arguments
             }
             else
-                throw (new ArgumentException("Person with id = " + id + " not found"));
+                throw (new ArgumentException("Person with id = " + id + " not found")); // Throw exception if person with ID not found
         }
 
+        // Method to remove a person by their ID
         public void Remove(int id)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
+            // Find and remove the person by ID
             Person foundPerson = this.Get(id);
 
             if (foundPerson != null)
-                persons.Remove(foundPerson);
+                persons.Remove(foundPerson); // Remove the person from the repository
             else
-                throw (new ArgumentException("Person with id = " + id + " not found"));
+                throw (new ArgumentException("Person with id = " + id + " not found")); // Throw exception if person with ID not found
         }
-
-
-
     }
 }
