@@ -13,20 +13,20 @@ namespace WPFAndMVVM2.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private PersonRepository personRepo = new PersonRepository();
-        private ObservableCollection<PersonViewModel> personsVM;
-        private PersonViewModel selectedPerson;
+        private ItemRepository itemRepo = new ItemRepository();
+        private ObservableCollection<ItemViewModel> itemsVM;
+        private ItemViewModel selectedItem;
 
         // Property to hold a collection of PersonViewModels
-        public ObservableCollection<PersonViewModel> PersonsVM
+        public ObservableCollection<ItemViewModel> ItemsVM
         {
-            get { return personsVM; }
+            get { return itemsVM; }
             set
             {
-                if (value != personsVM)
+                if (value != itemsVM)
                 {
-                    personsVM = value;
-                    OnPropertyChanged(nameof(PersonsVM));
+                    itemsVM = value;
+                    OnPropertyChanged(nameof(ItemsVM));
                 }
             }
         }
@@ -34,9 +34,9 @@ namespace WPFAndMVVM2.ViewModels
         // Constructor for MainViewModel
         public MainViewModel()
         {
-            PersonsVM = new ObservableCollection<PersonViewModel>(); // Initialize PersonsVM collection
+            ItemsVM = new ObservableCollection<ItemViewModel>(); // Initialize PersonsVM collection
 
-            UpdatePersonsVM(); // Populate PersonsVM initially
+            UpdateItemsVM(); // Populate PersonsVM initially
             SaveChangesCommand = new RelayCommand(SaveChangesToFile, () => true); // Command for saving changes
         }
 
@@ -48,13 +48,13 @@ namespace WPFAndMVVM2.ViewModels
         {
             try
             {
-                personRepo.UpdatePersonsFromViewModels(PersonsVM); // Update Person objects from ViewModels
+                itemRepo.UpdateItemsFromViewModels(ItemsVM); // Update Person objects from ViewModels
 
-                personRepo.SaveToFile(); // Save changes to file
+                itemRepo.SaveToFile(); // Save changes to file
 
-                UpdatePersonsVM(); // Update the ViewModel collection
+                UpdateItemsVM(); // Update the ViewModel collection
 
-                SelectedPerson = null; // Clear selected person after saving changes
+                SelectedItem = null; // Clear selected person after saving changes
             }
             catch (IOException ex)
             {
@@ -67,29 +67,29 @@ namespace WPFAndMVVM2.ViewModels
         }
 
         // Property for the selected person in the UI
-        public PersonViewModel SelectedPerson
+        public ItemViewModel SelectedItem
         {
-            get { return selectedPerson; }
+            get { return selectedItem; }
             set
             {
-                if (value != selectedPerson)
+                if (value != selectedItem)
                 {
-                    selectedPerson = value;
-                    OnPropertyChanged(nameof(SelectedPerson));
+                    selectedItem = value;
+                    OnPropertyChanged(nameof(SelectedItem));
                 }
             }
         }
 
         // Method to update PersonsVM collection from PersonRepository
-        private void UpdatePersonsVM()
+        private void UpdateItemsVM()
         {
-            PersonsVM.Clear(); // Clear existing elements
-            foreach (Person person in personRepo.GetPersons())
+            ItemsVM.Clear(); // Clear existing elements
+            foreach (Item item in itemRepo.GetItems())
             {
-                PersonViewModel personViewModel = new PersonViewModel(person);
-                PersonsVM.Add(personViewModel);
+                ItemViewModel itemViewModel = new ItemViewModel(item);
+                ItemsVM.Add(itemViewModel);
             }
-            OnPropertyChanged(nameof(PersonsVM));
+            OnPropertyChanged(nameof(ItemsVM));
         }
 
         // INotifyPropertyChanged event
@@ -102,19 +102,19 @@ namespace WPFAndMVVM2.ViewModels
         }
 
         // Method to add a default person to the collection
-        public void AddDefaultPerson()
+        public void AddDefaultItem()
         {
-            Person person = personRepo.Add("Specify item number", "Specify item", 0, "Specify storage");
-            PersonViewModel personViewModel = new PersonViewModel(person);
-            PersonsVM.Add(personViewModel);
-            SelectedPerson = personViewModel;
+            Item item = itemRepo.Add("Specify item number", "Specify item", 0, "Specify storage");
+            ItemViewModel itemViewModel = new ItemViewModel(item);
+            ItemsVM.Add(itemViewModel);
+            SelectedItem = itemViewModel;
         }
 
         // Method to delete the selected person from the collection
-        public void DeleteSelectedPerson()
+        public void DeleteSelectedItem()
         {
-            selectedPerson.DeletePerson(personRepo); // Delete person from repository
-            PersonsVM.Remove(SelectedPerson); // Remove person from ViewModel collection
+            selectedItem.DeleteItem(itemRepo); // Delete person from repository
+            ItemsVM.Remove(SelectedItem); // Remove person from ViewModel collection
         }
     }
 }

@@ -36,8 +36,16 @@ namespace WPFAndMVVM2
             }
             else
             {
-                MessageBox.Show("Forkert adgangskode");
+                MessageBox.Show("Entry Denied");
             }
+        }
+
+        private void prokatalog_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow1 = new MainWindow();
+            mainWindow1.Show();
+            this.Close();
+
         }
     }
 }

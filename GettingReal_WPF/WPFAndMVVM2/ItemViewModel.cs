@@ -10,18 +10,18 @@ using WPFAndMVVM2.Models; // Import models from the WPFAndMVVM2 namespace.
 namespace WPFAndMVVM2
 {
     // PersonViewModel class implementing INotifyPropertyChanged.
-    public class PersonViewModel : INotifyPropertyChanged
+    public class ItemViewModel : INotifyPropertyChanged
     {
-        private Person person { get; set; } // Private member variable holding a reference to a Person object.
+        private Item person { get; set; } // Private member variable holding a reference to a Person object.
 
         // Constructor to initialize PersonViewModel with a Person object.
-        public PersonViewModel(Person person)
+        public ItemViewModel(Item person)
         {
             this.person = person; // Initialize the person member variable with the given Person object.
-            FirstName = person.FirstName; // Set FirstName to the value from the corresponding Person object.
-            LastName = person.LastName; // Set LastName to the value from the corresponding Person object.
-            Age = person.Age; // Set Age to the value from the corresponding Person object.
-            Phone = person.Phone; // Set Phone to the value from the corresponding Person object.
+            ItemNumber = person.ItemNumber; // Set FirstName to the value from the corresponding Person object.
+            ItemName = person.ItemName; // Set LastName to the value from the corresponding Person object.
+            NumOfItem = person.NumOfItem; // Set Age to the value from the corresponding Person object.
+            Storage = person.Storage; // Set Phone to the value from the corresponding Person object.
         }
 
         // PropertyChanged event used to notify about property changes.
@@ -29,7 +29,7 @@ namespace WPFAndMVVM2
 
         // Property for FirstName with OnPropertyChanged method call.
         private string _firstName;
-        public string FirstName
+        public string ItemNumber
         {
             get { return _firstName; }
             set
@@ -37,14 +37,14 @@ namespace WPFAndMVVM2
                 if (_firstName != value)
                 {
                     _firstName = value;
-                    OnPropertyChanged(nameof(FirstName));
+                    OnPropertyChanged(nameof(ItemNumber));
                 }
             }
         }
 
         // Property for LastName with OnPropertyChanged method call.
         private string _lastName;
-        public string LastName
+        public string ItemName
         {
             get { return _lastName; }
             set
@@ -52,14 +52,14 @@ namespace WPFAndMVVM2
                 if (_lastName != value)
                 {
                     _lastName = value;
-                    OnPropertyChanged(nameof(LastName));
+                    OnPropertyChanged(nameof(ItemName));
                 }
             }
         }
 
         // Property for Age with OnPropertyChanged method call.
         private int _age;
-        public int Age
+        public int NumOfItem
         {
             get { return _age; }
             set
@@ -67,14 +67,14 @@ namespace WPFAndMVVM2
                 if (_age != value)
                 {
                     _age = value;
-                    OnPropertyChanged(nameof(Age));
+                    OnPropertyChanged(nameof(NumOfItem));
                 }
             }
         }
 
         // Property for Phone with OnPropertyChanged method call.
         private string _phone;
-        public string Phone
+        public string Storage
         {
             get { return _phone; }
             set
@@ -82,7 +82,7 @@ namespace WPFAndMVVM2
                 if (_phone != value)
                 {
                     _phone = value;
-                    OnPropertyChanged(nameof(Phone));
+                    OnPropertyChanged(nameof(Storage));
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace WPFAndMVVM2
         }
 
         // Method to delete a Person from the repository via PersonRepository.
-        public void DeletePerson(PersonRepository personRepository)
+        public void DeleteItem(ItemRepository personRepository)
         {
             personRepository.Remove(person.Id);
         }

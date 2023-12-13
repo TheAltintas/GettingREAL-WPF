@@ -51,8 +51,8 @@ namespace WPFAndMVVM2
         // Event handler for adding a new person
         private void btnNewPerson_Click(object sender, RoutedEventArgs e)
         {
-            mainViewModel.AddDefaultPerson(); // Add a default person via MainViewModel
-            listb.ScrollIntoView(mainViewModel.SelectedPerson); // Scroll to the newly added person
+            mainViewModel.AddDefaultItem(); // Add a default person via MainViewModel
+            listb.ScrollIntoView(mainViewModel.SelectedItem); // Scroll to the newly added person
             tbfn.IsReadOnly = false; // Enable editing FirstName TextBox
             tbphone.IsReadOnly = false; // Enable editing Phone TextBox
             tbln.IsReadOnly = false; // Enable editing LastName TextBox
@@ -61,7 +61,16 @@ namespace WPFAndMVVM2
         // Event handler for deleting a person
         private void btnDeletePerson_Click(object sender, RoutedEventArgs e)
         {
-            mainViewModel.DeleteSelectedPerson(); // Delete the selected person via MainViewModel
+            //mainViewModel.DeleteSelectedItem(); // Delete the selected person via MainViewModel
+            Warning warning = new Warning();
+            warning.Show();
+        }
+
+        private void backb_Click(object sender, RoutedEventArgs e)
+        {
+            FrontPage frontPage = new FrontPage();
+            frontPage.Show();
+            this.Close();
         }
     }
 }

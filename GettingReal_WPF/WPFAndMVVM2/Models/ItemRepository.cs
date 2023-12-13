@@ -5,22 +5,22 @@ using System.IO;
 
 namespace WPFAndMVVM2.Models
 {
-    public class PersonRepository
+    public class ItemRepository
     {
         // File path for storing person data
         string fullpath = "Persons.csv";
 
         // Collection to hold Person objects
-        private List<Person> persons = new List<Person>();
+        private List<Item> items = new List<Item>();
 
         // Method to retrieve all persons
-        public List<Person> GetPersons()
+        public List<Item> GetItems()
         {
-            return persons;
+            return items;
         }
 
         // Constructor to initialize the repository by reading from the file
-        public PersonRepository()
+        public ItemRepository()
         {
             InitializeRepository();
         }
@@ -61,10 +61,10 @@ namespace WPFAndMVVM2.Models
                 using (StreamWriter sw = new StreamWriter(fullpath))
                 {
                     // Write each person's data as a line in the file
-                    foreach (var person in persons)
+                    foreach (var item in items)
                     {
-                        string csvLine = $"{person.FirstName},{person.LastName},{person.Age},{person.Phone}";
-                        sw.WriteLine(csvLine);
+                        string line = $"{item.ItemNumber},{item.ItemName},{item.NumOfItem},{item.Storage}";
+                        sw.WriteLine(line);
                     }
                 }
             }
@@ -75,36 +75,36 @@ namespace WPFAndMVVM2.Models
         }
 
         // Method to update persons' data from ViewModel objects
-        public void UpdatePersonsFromViewModels(ObservableCollection<PersonViewModel> personsVM)
+        public void UpdateItemsFromViewModels(ObservableCollection<ItemViewModel> itemsVM)
         {
             // Update each person's data from corresponding ViewModel
-            for (int i = 0; i < persons.Count && i < personsVM.Count; i++)
+            for (int i = 0; i < items.Count && i < itemsVM.Count; i++)
             {
-                persons[i].FirstName = personsVM[i].FirstName;
-                persons[i].LastName = personsVM[i].LastName;
-                persons[i].Age = personsVM[i].Age;
-                persons[i].Phone = personsVM[i].Phone;
+                items[i].ItemNumber = itemsVM[i].ItemNumber;
+                items[i].ItemName = itemsVM[i].ItemName;
+                items[i].NumOfItem = itemsVM[i].NumOfItem;
+                items[i].Storage = itemsVM[i].Storage;
             }
         }
 
         // Method to add a new person
-        public Person Add(string firstName, string lastName, int age, string phone)
+        public Item Add(string itemNumber, string itemName, int numOfItem, string storage)
         {
             // Check validity of input arguments and create a new person
-            Person result = null;
-            if (!string.IsNullOrEmpty(firstName) &&
-                !string.IsNullOrEmpty(lastName) &&
-                age >= 0 &&
-                !string.IsNullOrEmpty(phone))
+            Item result = null;
+            if (!string.IsNullOrEmpty(itemNumber) &&
+                !string.IsNullOrEmpty(itemName) &&
+                numOfItem >= 0 &&
+                !string.IsNullOrEmpty(storage))
             {
-                result = new Person()
+                result = new Item()
                 {
-                    FirstName = firstName,
-                    LastName = lastName,
-                    Age = age,
-                    Phone = phone
+                    ItemNumber = itemNumber,
+                    ItemName = itemName,
+                    NumOfItem = numOfItem,
+                    Storage = storage
                 };
-                persons.Add(result); // Add the person to the repository
+                items.Add(result); // Add the person to the repository
             }
             else
                 throw (new ArgumentException("Not all arguments are valid")); // Throw exception for invalid arguments
@@ -113,15 +113,15 @@ namespace WPFAndMVVM2.Models
         }
 
         // Method to get a person by their ID
-        public Person Get(int id)
+        public Item Get(int id)
         {
             // Search for a person with the given ID
-            Person result = null;
-            foreach (Person p in persons)
+            Item result = null;
+            foreach (Item i in items)
             {
-                if (p.Id == id)
+                if (i.Id == id)
                 {
-                    result = p;
+                    result = i;
                     break;
                 }
             }
@@ -129,33 +129,33 @@ namespace WPFAndMVVM2.Models
         }
 
         // Method to get all persons in the repository
-        public List<Person> GetAll()
+        public List<Item> GetAll()
         {
-            return persons;
+            return items;
         }
 
         // Method to update a person's data by their ID
-        public void Update(int id, string firstName, string lastName, int age, string phone)
+        public void Update(int id, string itemNumber, string itemName, int numOfItem, string storage)
         {
             // Find the person by ID and update their data if arguments are valid
-            Person foundPerson = this.Get(id);
+            Item foundPerson = this.Get(id);
 
             if (foundPerson != null)
             {
-                if (!string.IsNullOrEmpty(firstName) &&
-                    !string.IsNullOrEmpty(lastName) &&
-                    age >= 0 &&
-                    !string.IsNullOrEmpty(phone))
+                if (!string.IsNullOrEmpty(itemNumber) &&
+                    !string.IsNullOrEmpty(itemName) &&
+                    numOfItem >= 0 &&
+                    !string.IsNullOrEmpty(storage))
                 {
                     // Update the person's data if any change is detected
-                    if (foundPerson.FirstName != firstName)
-                        foundPerson.FirstName = firstName;
-                    if (foundPerson.LastName != lastName)
-                        foundPerson.LastName = lastName;
-                    if (foundPerson.Age != age)
-                        foundPerson.Age = age;
-                    if (foundPerson.Phone != phone)
-                        foundPerson.Phone = phone;
+                    if (foundPerson.ItemNumber != itemNumber)
+                        foundPerson.ItemNumber = itemNumber;
+                    if (foundPerson.ItemName != itemName)
+                        foundPerson.ItemName = itemName;
+                    if (foundPerson.NumOfItem != numOfItem)
+                        foundPerson.NumOfItem = numOfItem;
+                    if (foundPerson.Storage != storage)
+                        foundPerson.Storage = storage;
                 }
                 else
                     throw (new ArgumentException("Not all arguments for person are valid")); // Throw exception for invalid arguments
@@ -168,10 +168,10 @@ namespace WPFAndMVVM2.Models
         public void Remove(int id)
         {
             // Find and remove the person by ID
-            Person foundPerson = this.Get(id);
+            Item foundItem = this.Get(id);
 
-            if (foundPerson != null)
-                persons.Remove(foundPerson); // Remove the person from the repository
+            if (foundItem != null)
+                items.Remove(foundItem); // Remove the person from the repository
             else
                 throw (new ArgumentException("Person with id = " + id + " not found")); // Throw exception if person with ID not found
         }
