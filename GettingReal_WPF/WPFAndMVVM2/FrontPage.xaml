@@ -8,7 +8,7 @@
         Title="FrontPage" Height="450" Width="800">
     <Grid>
         <Button x:Name="login" Content="Admin" HorizontalAlignment="Center" Margin="0,144,0,0" VerticalAlignment="Top" Height="50" Width="120" Click="login_Click"/>
-        <Button x:Name="prokatalog" Content="Produktkatalog" HorizontalAlignment="Center" Margin="0,275,0,0" VerticalAlignment="Top" Height="50" Width="120" Click="prokatalog_Click"/>
+        <Button x:Name="prokatalog" Content="Product Catalogue" HorizontalAlignment="Center" Margin="0,275,0,0" VerticalAlignment="Top" Height="50" Width="120" Click="prokatalog_Click"/>
         <PasswordBox x:Name="passbox" HorizontalAlignment="Center" Margin="0,199,0,0" VerticalAlignment="Top" Width="120" Height="45"/>
 
     </Grid>

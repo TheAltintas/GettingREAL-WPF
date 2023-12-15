@@ -31,19 +31,25 @@ namespace GettingReal_Eydes
             if (enteredPassword == "6619")
             {
                 MainWindow mainWindow = new MainWindow();
+                mainWindow.btnDeletePerson.Visibility = Visibility.Visible; 
+                mainWindow.btnNewPerson.Visibility = Visibility.Visible;
+                mainWindow.editbt.Visibility = Visibility.Visible;
                 mainWindow.Show();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Entry Denied");
+                MessageBox.Show("Access Denied");
             }
         }
 
         private void prokatalog_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow1 = new MainWindow();
-            mainWindow1.Show();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.btnDeletePerson.Visibility = Visibility.Collapsed;
+            mainWindow.btnNewPerson.Visibility = Visibility.Collapsed;
+            mainWindow.editbt.Visibility = Visibility.Collapsed;
+            mainWindow.Show();
             this.Close();
 
         }

@@ -21,7 +21,7 @@ namespace GettingReal_Eydes
     public partial class MainWindow : Window
     {
         // Instance of the MainViewModel class for managing UI logic
-        private MainViewModel mainViewModel;
+        public MainViewModel mainViewModel;
 
         // Constructor for MainWindow
         public MainWindow()
