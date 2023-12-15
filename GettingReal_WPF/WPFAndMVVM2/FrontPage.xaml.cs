@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WPFAndMVVM2
+namespace GettingReal_Eydes
 {
     /// <summary>
     /// Interaction logic for FrontPage.xaml

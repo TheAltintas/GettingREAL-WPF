@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WPFAndMVVM2
+namespace GettingReal_Eydes
 {
     // RelayCommand class implements ICommand interface for delegating commands
     class RelayCommand : ICommand

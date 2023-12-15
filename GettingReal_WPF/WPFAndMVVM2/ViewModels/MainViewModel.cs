@@ -5,11 +5,11 @@ using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using WPFAndMVVM2.Models;
+using GettingReal_Eydes.Models;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 
-namespace WPFAndMVVM2.ViewModels
+namespace GettingReal_Eydes.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
@@ -17,7 +17,7 @@ namespace WPFAndMVVM2.ViewModels
         private ObservableCollection<ItemViewModel> itemsVM;
         private ItemViewModel selectedItem;
 
-        // Property to hold a collection of PersonViewModels
+        // Property to hold a collection of ItemViewModels
         public ObservableCollection<ItemViewModel> ItemsVM
         {
             get { return itemsVM; }
@@ -36,7 +36,7 @@ namespace WPFAndMVVM2.ViewModels
         {
             ItemsVM = new ObservableCollection<ItemViewModel>(); // Initialize PersonsVM collection
 
-            UpdateItemsVM(); // Populate PersonsVM initially
+            UpdateItemsVM(); // Populate ItemsVM initially
             SaveChangesCommand = new RelayCommand(SaveChangesToFile, () => true); // Command for saving changes
         }
 
@@ -48,13 +48,13 @@ namespace WPFAndMVVM2.ViewModels
         {
             try
             {
-                itemRepo.UpdateItemsFromViewModels(ItemsVM); // Update Person objects from ViewModels
+                itemRepo.UpdateItemsFromViewModels(ItemsVM); // Update item objects from ViewModels
 
                 itemRepo.SaveToFile(); // Save changes to file
 
                 UpdateItemsVM(); // Update the ViewModel collection
 
-                SelectedItem = null; // Clear selected person after saving changes
+                SelectedItem = null; // Clear selected item after saving changes
             }
             catch (IOException ex)
             {
@@ -66,7 +66,7 @@ namespace WPFAndMVVM2.ViewModels
             }
         }
 
-        // Property for the selected person in the UI
+        // Property for the selected item in the UI
         public ItemViewModel SelectedItem
         {
             get { return selectedItem; }
@@ -80,7 +80,7 @@ namespace WPFAndMVVM2.ViewModels
             }
         }
 
-        // Method to update PersonsVM collection from PersonRepository
+        // Method to update ItemsVM collection from PersonRepository
         private void UpdateItemsVM()
         {
             ItemsVM.Clear(); // Clear existing elements
@@ -101,7 +101,7 @@ namespace WPFAndMVVM2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // Method to add a default person to the collection
+        // Method to add a default item to the collection
         public void AddDefaultItem()
         {
             Item item = itemRepo.Add("Specify item number", "Specify item", 0, "Specify storage");
@@ -110,11 +110,11 @@ namespace WPFAndMVVM2.ViewModels
             SelectedItem = itemViewModel;
         }
 
-        // Method to delete the selected person from the collection
+        // Method to delete the selected item from the collection
         public void DeleteSelectedItem()
         {
-            selectedItem.DeleteItem(itemRepo); // Delete person from repository
-            ItemsVM.Remove(SelectedItem); // Remove person from ViewModel collection
+            selectedItem.DeleteItem(itemRepo); // Delete item from repository
+            ItemsVM.Remove(SelectedItem); // Remove item from ViewModel collection
         }
     }
 }

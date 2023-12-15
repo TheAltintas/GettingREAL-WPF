@@ -11,9 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using WPFAndMVVM2.ViewModels;
+using GettingReal_Eydes.ViewModels;
 
-namespace WPFAndMVVM2
+namespace GettingReal_Eydes
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -35,35 +35,34 @@ namespace WPFAndMVVM2
         private void saveb_Click(object sender, RoutedEventArgs e)
         {
             mainViewModel.SaveChangesToFile(); // Trigger MainViewModel to save changes to file
-            tbfn.IsReadOnly = true; // Set FirstName TextBox to read-only
-            tbln.IsReadOnly = true; // Set LastName TextBox to read-only
-            tbphone.IsReadOnly = true; // Set Phone TextBox to read-only
+            tbfn.IsReadOnly = true; // Set ItemNumber TextBox to read-only
+            tbln.IsReadOnly = true; // Set ItemName TextBox to read-only
+            tbphone.IsReadOnly = true; // Set Storage TextBox to read-only
+            MessageBox.Show("The changes has been saved");
         }
 
         // Event handler for the edit button click
         private void editbt_Click(object sender, RoutedEventArgs e)
         {
-            tbfn.IsReadOnly = false; // Enable editing FirstName TextBox
-            tbln.IsReadOnly = false; // Enable editing LastName TextBox
-            tbphone.IsReadOnly = false; // Enable editing Phone TextBox
+            tbfn.IsReadOnly = false; // Enable editing ItemNumber TextBox
+            tbln.IsReadOnly = false; // Enable editing ItemName TextBox
+            tbphone.IsReadOnly = false; // Enable editing Storage TextBox
         }
 
-        // Event handler for adding a new person
+        // Event handler for adding a new item
         private void btnNewPerson_Click(object sender, RoutedEventArgs e)
         {
-            mainViewModel.AddDefaultItem(); // Add a default person via MainViewModel
+            mainViewModel.AddDefaultItem(); // Add a default item via MainViewModel
             listb.ScrollIntoView(mainViewModel.SelectedItem); // Scroll to the newly added person
-            tbfn.IsReadOnly = false; // Enable editing FirstName TextBox
-            tbphone.IsReadOnly = false; // Enable editing Phone TextBox
-            tbln.IsReadOnly = false; // Enable editing LastName TextBox
+            tbfn.IsReadOnly = false; // Enable editing ItemNumber TextBox
+            tbphone.IsReadOnly = false; // Enable editing ItemName TextBox
+            tbln.IsReadOnly = false; // Enable editing Storage TextBox
         }
 
-        // Event handler for deleting a person
+        // Event handler for deleting an item
         private void btnDeletePerson_Click(object sender, RoutedEventArgs e)
         {
-            //mainViewModel.DeleteSelectedItem(); // Delete the selected person via MainViewModel
-            Warning warning = new Warning();
-            warning.Show();
+            mainViewModel.DeleteSelectedItem(); // Delete the selected item via MainViewModel
         }
 
         private void backb_Click(object sender, RoutedEventArgs e)
